@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>여행 추천 웹사이트</title>
+<style>
+body{margin:0;font-family:Arial;background:#f4f6f9}
+header{position:sticky;top:0;background:#4da6ff;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center}
+nav a{color:white;text-decoration:none;margin:10px;font-weight:bold}
+section{padding:50px}
+.hero{background:linear-gradient(135deg,#4da6ff,#8ec5fc);color:white;text-align:center;padding:100px}
+.cards{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+.card{background:white;width:250px;padding:20px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+h2{text-align:center}
+input,textarea{width:80%;padding:10px;margin:10px;border-radius:8px;border:1px solid #ccc}
+button{padding:10px 20px;border:none;border-radius:8px;background:#4da6ff;color:white;cursor:pointer}
+footer{text-align:center;background:#333;color:white;padding:20px}
+#reviews{margin-top:20px}
+.reviewBox{background:white;padding:15px;margin:10px auto;border-radius:10px;width:70%}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Travel Guide</h1>
+<nav>
+<a href="#home">Home</a>
+<a href="#travel">Travel</a>
+<a href="#restaurant">Restaurant</a>
+<a href="#review">Review</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<h1>당신의 특별한 여행을 시작하세요!</h1>
+<p>전국 여행지와 맛집 정보를 한눈에!</p>
+</section>
+
+<section id="travel">
+<h2>인기 여행지</h2>
+<div class="cards">
+<div class="card"><h3>🌴 제주도</h3><p>아름다운 자연과 바다</p></div>
+<div class="card"><h3>🏖 부산</h3><p>해운대와 광안리</p></div>
+<div class="card"><h3>☕ 강릉</h3><p>커피거리와 해변</p></div>
+</div>
+</section>
+
+<section id="restaurant">
+<h2>추천 맛집</h2>
+<div class="cards">
+<div class="card"><h3>흑돼지 맛집</h3><p>가격: ₩15,000</p><p>★★★★☆</p></div>
+<div class="card"><h3>회 정식</h3><p>가격: ₩25,000</p><p>★★★★★</p></div>
+</div>
+</section>
+
+<section id="review">
+<h2>여행 후기</h2>
+<input id="name" placeholder="이름"><br>
+<textarea id="text" placeholder="여행 후기를 입력하세요"></textarea><br>
+<button onclick="saveReview()">후기 등록</button>
+
+<div id="reviews"></div>
+</section>
+
+<section id="contact">
+<h2>문의하기</h2>
+<input placeholder="이메일"><br>
+<textarea placeholder="문의 내용을 입력하세요"></textarea><br>
+<button>전송</button>
+</section>
+
+<footer>
+<p>이메일: travel@gmail.com</p>
+<p>© Travel Website</p>
+</footer>
+
+<script>
+function saveReview(){
+let n=document.getElementById("name").value;
+let t=document.getElementById("text").value;
+
+if(!n||!t) return;
+
+let reviews=JSON.parse(localStorage.getItem("reviews"))||[];
+reviews.push({name:n,text:t});
+
+localStorage.setItem("reviews",JSON.stringify(reviews));
+displayReviews();
+}
+
+function displayReviews(){
+let reviews=JSON.parse(localStorage.getItem("reviews"))||[];
+let area=document.getElementById("reviews");
+
+area.innerHTML="";
+
+reviews.forEach(r=>{
+area.innerHTML += `<div class='reviewBox'><b>${r.name}</b><p>${r.text}</p></div>`
+})
+}
+
+displayReviews();
+</script>
+
+</body>
+</html>
